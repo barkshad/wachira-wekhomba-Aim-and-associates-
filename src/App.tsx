@@ -3,23 +3,57 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import React from 'react';
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import React, { Suspense, useState, useEffect } from 'react';
+import { createBrowserRouter, RouterProvider, Outlet, useLocation } from 'react-router-dom';
 import { HelmetProvider } from 'react-helmet-async';
+import { AnimatePresence } from 'motion/react';
 import Layout from './components/Layout';
-import Home from './pages/Home';
-import About from './pages/About';
-import PracticeAreas from './pages/PracticeAreas';
-import Team from './pages/Team';
-import Contact from './pages/Contact';
-import Consultation from './pages/Consultation';
-import Portal from './pages/Portal';
-import Blog from './pages/Blog';
+import LoadingScreen from './components/ui/LoadingScreen';
+
+// Lazy Load Pages
+const Home = React.lazy(() => import('./pages/Home'));
+const About = React.lazy(() => import('./pages/About'));
+const PracticeAreas = React.lazy(() => import('./pages/PracticeAreas'));
+const Team = React.lazy(() => import('./pages/Team'));
+const Contact = React.lazy(() => import('./pages/Contact'));
+const Consultation = React.lazy(() => import('./pages/Consultation'));
+const Portal = React.lazy(() => import('./pages/Portal'));
+const Blog = React.lazy(() => import('./pages/Blog'));
+
+// Wrapper to handle AnimatePresence and Loading
+const AnimatedRoutes = () => {
+  const location = useLocation();
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    // Simulate initial load
+    const timer = setTimeout(() => setIsLoading(false), 2000);
+    return () => clearTimeout(timer);
+  }, []);
+
+  return (
+    <>
+      <AnimatePresence mode="wait">
+        {isLoading && <LoadingScreen key="loader" />}
+      </AnimatePresence>
+      
+      {!isLoading && (
+        <Layout>
+          <AnimatePresence mode="wait">
+             <Suspense fallback={<div className="min-h-screen bg-white"></div>}>
+                <Outlet key={location.pathname} />
+             </Suspense>
+          </AnimatePresence>
+        </Layout>
+      )}
+    </>
+  );
+};
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Layout />,
+    element: <AnimatedRoutes />,
     children: [
       {
         index: true,
