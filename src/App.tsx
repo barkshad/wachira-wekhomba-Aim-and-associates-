@@ -9,6 +9,7 @@ import { HelmetProvider } from 'react-helmet-async';
 import { AnimatePresence } from 'motion/react';
 import Layout from './components/Layout';
 import LoadingScreen from './components/ui/LoadingScreen';
+import RequireAuth from './components/auth/RequireAuth';
 
 // Lazy Load Pages
 const Home = React.lazy(() => import('./pages/Home'));
@@ -19,6 +20,14 @@ const Contact = React.lazy(() => import('./pages/Contact'));
 const Consultation = React.lazy(() => import('./pages/Consultation'));
 const Portal = React.lazy(() => import('./pages/Portal'));
 const Blog = React.lazy(() => import('./pages/Blog'));
+
+// Admin Pages
+const AdminLayout = React.lazy(() => import('./pages/admin/AdminLayout'));
+const Dashboard = React.lazy(() => import('./pages/admin/Dashboard'));
+const ContentEditor = React.lazy(() => import('./pages/admin/ContentEditor'));
+const MediaManager = React.lazy(() => import('./pages/admin/MediaManager'));
+const Settings = React.lazy(() => import('./pages/admin/Settings'));
+const Login = React.lazy(() => import('./pages/admin/Login'));
 
 // Wrapper to handle AnimatePresence and Loading
 const AnimatedRoutes = () => {
@@ -41,7 +50,9 @@ const AnimatedRoutes = () => {
         <Layout>
           <AnimatePresence mode="wait">
              <Suspense fallback={<div className="min-h-screen bg-white"></div>}>
-                <Outlet key={location.pathname} />
+                <div key={location.pathname}>
+                   <Outlet />
+                </div>
              </Suspense>
           </AnimatePresence>
         </Layout>
@@ -86,6 +97,42 @@ const router = createBrowserRouter([
       {
         path: "insights",
         element: <Blog />,
+      },
+    ],
+  },
+  {
+    path: "/admin/login",
+    element: (
+      <Suspense fallback={<div className="min-h-screen flex items-center justify-center">Loading...</div>}>
+        <Login />
+      </Suspense>
+    ),
+  },
+  {
+    path: "/admin",
+    element: (
+      <RequireAuth>
+        <Suspense fallback={<div className="min-h-screen flex items-center justify-center">Loading Admin...</div>}>
+          <AdminLayout />
+        </Suspense>
+      </RequireAuth>
+    ),
+    children: [
+      {
+        index: true,
+        element: <Dashboard />,
+      },
+      {
+        path: "content",
+        element: <ContentEditor />,
+      },
+      {
+        path: "media",
+        element: <MediaManager />,
+      },
+      {
+        path: "settings",
+        element: <Settings />,
       },
     ],
   },
