@@ -1,42 +1,63 @@
 import React from 'react';
 import { motion } from 'motion/react';
 import { Link } from 'react-router-dom';
-import { ArrowRight, Briefcase, Gavel, MapPin, Users, Scale, Shield } from 'lucide-react';
+import { ArrowRight, Briefcase, Gavel, MapPin, Users, Scale, Shield, FileText, Globe, Award } from 'lucide-react';
 import TiltCard from '../ui/TiltCard';
 
+const iconMap: Record<string, React.ReactNode> = {
+  'briefcase': <Briefcase className="h-8 w-8" />,
+  'gavel': <Gavel className="h-8 w-8" />,
+  'map-pin': <MapPin className="h-8 w-8" />,
+  'users': <Users className="h-8 w-8" />,
+  'scale': <Scale className="h-8 w-8" />,
+  'shield': <Shield className="h-8 w-8" />,
+  'file-text': <FileText className="h-8 w-8" />,
+  'globe': <Globe className="h-8 w-8" />,
+  'award': <Award className="h-8 w-8" />,
+};
+
 const PracticeAreasSection = ({ data }: { data: any }) => {
-  const areas = data.areas || [
+  const defaultAreas = [
     { 
       title: "Corporate Law", 
-      icon: <Briefcase className="h-8 w-8" />, 
+      icon: "briefcase", 
       desc: "Comprehensive legal solutions for businesses, including incorporation, compliance, and governance." 
     },
     { 
       title: "Civil Litigation", 
-      icon: <Gavel className="h-8 w-8" />, 
+      icon: "gavel", 
       desc: "Expert representation in civil disputes, ensuring your rights and interests are vigorously defended." 
     },
     { 
       title: "Property & Land Law", 
-      icon: <MapPin className="h-8 w-8" />, 
+      icon: "map-pin", 
       desc: "Guidance on real estate transactions, land transfers, leases, and property dispute resolution." 
     },
     { 
       title: "Family Law", 
-      icon: <Users className="h-8 w-8" />, 
+      icon: "users", 
       desc: "Compassionate legal support for divorce, custody, succession, and other family-related matters." 
     },
     { 
       title: "Commercial Law", 
-      icon: <Scale className="h-8 w-8" />, 
+      icon: "scale", 
       desc: "Strategic advice on commercial contracts, trade regulations, and business operations." 
     },
     { 
       title: "Legal Advisory", 
-      icon: <Shield className="h-8 w-8" />, 
+      icon: "shield", 
       desc: "Professional legal opinions and advisory services to help you make informed decisions." 
     },
   ];
+
+  const areas = data.areas || defaultAreas;
+
+  const getIcon = (icon: any) => {
+    if (typeof icon === 'string') {
+      return iconMap[icon] || <Briefcase className="h-8 w-8" />;
+    }
+    return icon; // Fallback for existing ReactNode icons if any (though we should avoid this)
+  };
 
   return (
     <section className="py-32 bg-gray-50">
@@ -61,7 +82,7 @@ const PracticeAreasSection = ({ data }: { data: any }) => {
             >
               <TiltCard className="h-full bg-white p-10 rounded-sm shadow-lg hover:shadow-2xl border-t-4 border-transparent hover:border-accent group">
                 <div className="bg-primary/5 w-16 h-16 rounded-full flex items-center justify-center text-primary mb-8 group-hover:bg-primary group-hover:text-white transition-all duration-300 transform group-hover:scale-110">
-                  {area.icon}
+                  {getIcon(area.icon)}
                 </div>
                 <h3 className="font-serif text-2xl font-bold text-gray-900 mb-4 group-hover:text-primary transition-colors">{area.title}</h3>
                 <p className="text-gray-600 mb-8 text-sm leading-relaxed">{area.desc}</p>

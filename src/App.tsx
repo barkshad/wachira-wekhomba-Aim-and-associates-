@@ -18,7 +18,6 @@ const PracticeAreas = React.lazy(() => import('./pages/PracticeAreas'));
 const Team = React.lazy(() => import('./pages/Team'));
 const Contact = React.lazy(() => import('./pages/Contact'));
 const Consultation = React.lazy(() => import('./pages/Consultation'));
-const Portal = React.lazy(() => import('./pages/Portal'));
 const Blog = React.lazy(() => import('./pages/Blog'));
 
 // Admin Pages
@@ -89,10 +88,6 @@ const router = createBrowserRouter([
       {
         path: "consultation",
         element: <Consultation />,
-      },
-      {
-        path: "portal",
-        element: <Portal />,
       },
       {
         path: "insights",

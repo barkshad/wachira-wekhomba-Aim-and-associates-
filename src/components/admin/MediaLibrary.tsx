@@ -77,7 +77,7 @@ const MediaLibrary = ({ onSelect, selectable = false }: MediaLibraryProps) => {
             className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent outline-none"
           />
         </div>
-        {!selectable && (
+        <div className="flex gap-2">
           <div {...getRootProps()} className="cursor-pointer">
             <input {...getInputProps()} />
             <button className="flex items-center px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary-dark transition-colors disabled:opacity-50" disabled={uploading}>
@@ -85,7 +85,7 @@ const MediaLibrary = ({ onSelect, selectable = false }: MediaLibraryProps) => {
               Upload Media
             </button>
           </div>
-        )}
+        </div>
       </div>
 
       {/* Upload Area (only visible if not selectable or if explicitly wanted, but button above handles it) */}

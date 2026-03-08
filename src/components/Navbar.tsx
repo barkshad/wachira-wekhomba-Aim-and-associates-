@@ -71,15 +71,7 @@ const Navbar = () => {
             ))}
             
             <div className={`h-6 w-px mx-2 ${isScrolled ? 'bg-gray-200' : 'bg-white/20'}`}></div>
-
-            <Link
-              to="/portal"
-              className={`flex items-center text-sm font-medium transition-colors hover:scale-105 transform duration-200 ${isScrolled ? 'text-secondary hover:text-primary' : 'text-white/90 hover:text-white mix-blend-difference'}`}
-            >
-              <Lock size={14} className="mr-1.5" />
-              Client Portal
-            </Link>
-
+            
             <Link
               to="/consultation"
               className="bg-primary text-white px-6 py-2.5 rounded-sm text-sm font-medium hover:bg-primary/90 transition-all duration-300 border border-primary shadow-md hover:shadow-lg hover:-translate-y-0.5"
@@ -90,13 +82,6 @@ const Navbar = () => {
 
           {/* Mobile Menu Button */}
           <div className="lg:hidden flex items-center space-x-4 z-50">
-             <Link
-              to="/portal"
-              className={`flex items-center text-xs font-medium transition-colors ${isScrolled ? 'text-secondary hover:text-primary' : 'text-white hover:text-white/80 mix-blend-difference'}`}
-            >
-              <Lock size={14} className="mr-1" />
-              Portal
-            </Link>
             <button
               onClick={() => setIsOpen(!isOpen)}
               className={`focus:outline-none transition-transform active:scale-95 ${isScrolled ? 'text-gray-700 hover:text-primary' : 'text-white hover:text-white/80 mix-blend-difference'}`}
@@ -143,14 +128,6 @@ const Navbar = () => {
                 transition={{ delay: 0.4, duration: 0.5 }}
                 className="pt-8 space-y-4 border-t border-gray-100 mt-4"
               >
-                <Link
-                  to="/portal"
-                  onClick={() => setIsOpen(false)}
-                  className="flex items-center justify-center w-full px-5 py-4 text-base font-medium text-secondary bg-secondary/5 border border-secondary/20 rounded-sm hover:bg-secondary/10 transition-colors"
-                >
-                  <Lock size={18} className="mr-2" />
-                  Access Client Portal
-                </Link>
                 <Link
                   to="/consultation"
                   onClick={() => setIsOpen(false)}

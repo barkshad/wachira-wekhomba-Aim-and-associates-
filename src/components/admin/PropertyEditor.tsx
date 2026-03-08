@@ -85,9 +85,74 @@ const PropertyEditor = ({ section, onChange, onClose }: PropertyEditorProps) => 
         );
       case 'stats':
         return (
-          <div className="p-4 bg-gray-50 rounded-lg text-center text-gray-500">
-            Stats are currently managed via code configuration.
-            {/* Future: Add dynamic stats array editor */}
+          <div className="space-y-4">
+             <div className="bg-blue-50 p-3 rounded-md text-sm text-blue-700 mb-4">
+                Manage the statistics displayed on the home page.
+             </div>
+             {(data.stats || []).map((stat: any, index: number) => (
+                <div key={index} className="border border-gray-200 rounded-lg p-4 relative bg-gray-50">
+                   <button 
+                      onClick={() => {
+                         const newStats = [...(data.stats || [])];
+                         newStats.splice(index, 1);
+                         handleChange('stats', newStats);
+                      }}
+                      className="absolute top-2 right-2 text-red-500 hover:text-red-700"
+                   >
+                      <Trash2 className="w-4 h-4" />
+                   </button>
+                   <div className="grid grid-cols-2 gap-2 mb-2">
+                      <div>
+                         <label className="block text-xs font-medium text-gray-500">Value</label>
+                         <input 
+                            type="number" 
+                            value={stat.end} 
+                            onChange={(e) => {
+                               const newStats = [...(data.stats || [])];
+                               newStats[index] = { ...stat, end: parseInt(e.target.value) };
+                               handleChange('stats', newStats);
+                            }}
+                            className="w-full px-2 py-1 border rounded text-sm"
+                         />
+                      </div>
+                      <div>
+                         <label className="block text-xs font-medium text-gray-500">Suffix</label>
+                         <input 
+                            type="text" 
+                            value={stat.suffix || ''} 
+                            onChange={(e) => {
+                               const newStats = [...(data.stats || [])];
+                               newStats[index] = { ...stat, suffix: e.target.value };
+                               handleChange('stats', newStats);
+                            }}
+                            className="w-full px-2 py-1 border rounded text-sm"
+                         />
+                      </div>
+                   </div>
+                   <div>
+                      <label className="block text-xs font-medium text-gray-500">Label</label>
+                      <input 
+                         type="text" 
+                         value={stat.label} 
+                         onChange={(e) => {
+                            const newStats = [...(data.stats || [])];
+                            newStats[index] = { ...stat, label: e.target.value };
+                            handleChange('stats', newStats);
+                         }}
+                         className="w-full px-2 py-1 border rounded text-sm"
+                      />
+                   </div>
+                </div>
+             ))}
+             <button 
+                onClick={() => {
+                   const newStats = [...(data.stats || []), { end: 0, suffix: '+', label: 'New Stat' }];
+                   handleChange('stats', newStats);
+                }}
+                className="w-full py-2 border-2 border-dashed border-gray-300 rounded-lg text-gray-500 hover:border-primary hover:text-primary flex items-center justify-center text-sm"
+             >
+                <Plus className="w-4 h-4 mr-2" /> Add Stat
+             </button>
           </div>
         );
       case 'about':
@@ -101,9 +166,81 @@ const PropertyEditor = ({ section, onChange, onClose }: PropertyEditorProps) => 
         );
       case 'practice-areas':
         return (
-          <div className="p-4 bg-gray-50 rounded-lg text-center text-gray-500">
-            Practice Areas are currently managed via code configuration.
-            {/* Future: Add dynamic practice areas array editor */}
+          <div className="space-y-4">
+             <div className="bg-blue-50 p-3 rounded-md text-sm text-blue-700 mb-4">
+                Manage the practice areas highlights. Icons are currently fixed.
+             </div>
+             {(data.areas || []).map((area: any, index: number) => (
+                <div key={index} className="border border-gray-200 rounded-lg p-4 relative bg-gray-50">
+                   <button 
+                      onClick={() => {
+                         const newAreas = [...(data.areas || [])];
+                         newAreas.splice(index, 1);
+                         handleChange('areas', newAreas);
+                      }}
+                      className="absolute top-2 right-2 text-red-500 hover:text-red-700"
+                   >
+                      <Trash2 className="w-4 h-4" />
+                   </button>
+                   <div className="mb-2">
+                      <label className="block text-xs font-medium text-gray-500">Icon</label>
+                      <select
+                         value={area.icon || 'briefcase'}
+                         onChange={(e) => {
+                            const newAreas = [...(data.areas || [])];
+                            newAreas[index] = { ...area, icon: e.target.value };
+                            handleChange('areas', newAreas);
+                         }}
+                         className="w-full px-2 py-1 border rounded text-sm bg-white"
+                      >
+                         <option value="briefcase">Briefcase</option>
+                         <option value="gavel">Gavel</option>
+                         <option value="map-pin">Map Pin</option>
+                         <option value="users">Users</option>
+                         <option value="scale">Scale</option>
+                         <option value="shield">Shield</option>
+                         <option value="file-text">File Text</option>
+                         <option value="globe">Globe</option>
+                         <option value="award">Award</option>
+                      </select>
+                   </div>
+                   <div className="mb-2">
+                      <label className="block text-xs font-medium text-gray-500">Title</label>
+                      <input 
+                         type="text" 
+                         value={area.title} 
+                         onChange={(e) => {
+                            const newAreas = [...(data.areas || [])];
+                            newAreas[index] = { ...area, title: e.target.value };
+                            handleChange('areas', newAreas);
+                         }}
+                         className="w-full px-2 py-1 border rounded text-sm"
+                      />
+                   </div>
+                   <div>
+                      <label className="block text-xs font-medium text-gray-500">Description</label>
+                      <textarea 
+                         rows={2}
+                         value={area.desc} 
+                         onChange={(e) => {
+                            const newAreas = [...(data.areas || [])];
+                            newAreas[index] = { ...area, desc: e.target.value };
+                            handleChange('areas', newAreas);
+                         }}
+                         className="w-full px-2 py-1 border rounded text-sm"
+                      />
+                   </div>
+                </div>
+             ))}
+             <button 
+                onClick={() => {
+                   const newAreas = [...(data.areas || []), { title: 'New Area', desc: 'Description here...', icon: 'briefcase' }];
+                   handleChange('areas', newAreas);
+                }}
+                className="w-full py-2 border-2 border-dashed border-gray-300 rounded-lg text-gray-500 hover:border-primary hover:text-primary flex items-center justify-center text-sm"
+             >
+                <Plus className="w-4 h-4 mr-2" /> Add Practice Area
+             </button>
           </div>
         );
       case 'cta':
