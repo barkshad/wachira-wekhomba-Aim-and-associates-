@@ -23,7 +23,9 @@ const Bookings = () => {
   }).sort((a: any, b: any) => {
     const dateA = a.createdAt ? new Date(a.createdAt).getTime() : 0;
     const dateB = b.createdAt ? new Date(b.createdAt).getTime() : 0;
-    return dateB - dateA;
+    const timeA = isNaN(dateA) ? 0 : dateA;
+    const timeB = isNaN(dateB) ? 0 : dateB;
+    return timeB - timeA;
   }) : [];
 
   if (loading) {
