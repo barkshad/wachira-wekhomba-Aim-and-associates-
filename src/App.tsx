@@ -7,6 +7,7 @@ import React, { Suspense, useState, useEffect } from 'react';
 import { createBrowserRouter, RouterProvider, Outlet, useLocation } from 'react-router-dom';
 import { HelmetProvider } from 'react-helmet-async';
 import { AnimatePresence } from 'motion/react';
+import { Analytics } from '@vercel/analytics/react';
 import Layout from './components/Layout';
 import LoadingScreen from './components/ui/LoadingScreen';
 import RequireAuth from './components/auth/RequireAuth';
@@ -147,6 +148,7 @@ export default function App() {
   return (
     <HelmetProvider>
       <RouterProvider router={router} />
+      <Analytics />
     </HelmetProvider>
   );
 }
