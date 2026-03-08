@@ -11,6 +11,10 @@ interface ImagePickerProps {
 const ImagePicker = ({ value, onChange, label }: ImagePickerProps) => {
   const [isOpen, setIsOpen] = useState(false);
 
+  const isVideo = (url: string) => {
+    return url.match(/\.(mp4|webm|ogg|mov)$/i);
+  };
+
   return (
     <div className="space-y-2">
       {label && <label className="block text-sm font-medium text-gray-700">{label}</label>}
@@ -18,7 +22,11 @@ const ImagePicker = ({ value, onChange, label }: ImagePickerProps) => {
       <div className="flex items-start gap-4">
         {value && (
           <div className="relative w-24 h-24 rounded-lg overflow-hidden border border-gray-200 group">
-            <img src={value} alt="Preview" className="w-full h-full object-cover" />
+            {isVideo(value) ? (
+              <video src={value} className="w-full h-full object-cover" muted />
+            ) : (
+              <img src={value} alt="Preview" className="w-full h-full object-cover" />
+            )}
             <button
               onClick={() => onChange('')}
               className="absolute top-1 right-1 p-1 bg-red-500 text-white rounded-full opacity-0 group-hover:opacity-100 transition-opacity"

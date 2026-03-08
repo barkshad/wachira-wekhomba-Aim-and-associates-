@@ -37,7 +37,13 @@ const MediaLibrary = ({ onSelect, selectable = false }: MediaLibraryProps) => {
     })();
   };
 
-  const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop } as any);
+  const { getRootProps, getInputProps, isDragActive } = useDropzone({ 
+    onDrop,
+    accept: {
+      'image/*': [],
+      'video/*': []
+    }
+  } as any);
 
   const handleDelete = async (e: React.MouseEvent, id: string) => {
     e.stopPropagation();
@@ -102,6 +108,8 @@ const MediaLibrary = ({ onSelect, selectable = false }: MediaLibraryProps) => {
             <div className="aspect-square bg-gray-100 relative">
               {item.type?.startsWith('image/') ? (
                 <img src={item.url} alt={item.name} className="w-full h-full object-cover" />
+              ) : item.type?.startsWith('video/') ? (
+                <video src={item.url} className="w-full h-full object-cover" controls muted />
               ) : (
                 <div className="flex items-center justify-center h-full text-gray-400">
                   <ImageIcon className="w-12 h-12" />

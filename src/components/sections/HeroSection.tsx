@@ -6,15 +6,30 @@ const HeroSection = ({ data }: { data: any }) => {
   const { scrollY } = useScroll();
   const y1 = useTransform(scrollY, [0, 500], [0, 200]);
 
+  const isVideo = (url: string) => {
+    return url?.match(/\.(mp4|webm|ogg|mov)$/i);
+  };
+
   return (
     <section className="relative h-screen min-h-[700px] flex items-center justify-center text-white overflow-hidden">
       {/* Background Image with Overlay */}
       <motion.div style={{ y: y1 }} className="absolute inset-0 z-0">
-        <img 
-          src={data.backgroundImage} 
-          alt="Hero Background" 
-          className="w-full h-full object-cover scale-110"
-        />
+        {isVideo(data.backgroundImage) ? (
+          <video 
+            src={data.backgroundImage} 
+            autoPlay 
+            loop 
+            muted 
+            playsInline
+            className="w-full h-full object-cover scale-110"
+          />
+        ) : (
+          <img 
+            src={data.backgroundImage} 
+            alt="Hero Background" 
+            className="w-full h-full object-cover scale-110"
+          />
+        )}
         <div className="absolute inset-0 bg-gradient-to-r from-primary/95 via-primary/80 to-primary/40 mix-blend-multiply"></div>
       </motion.div>
 
